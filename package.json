@@ -1,15 +1,14 @@
 {
-  "name": "kb-art",
-  "version": "0.0.1",
+  "name": "art-portfolio",
   "private": true,
-  "engines": {
-    "node": ">=22"
-  },
+  "version": "0.2.0",
+  "type": "module",
   "scripts": {
     "dev": "tinacms dev -c \"vite\"",
     "build": "tinacms build && vite build",
     "build-local": "tinacms build --local --skip-cloud-checks -c \"vite build\"",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "react": "^19.2.7",

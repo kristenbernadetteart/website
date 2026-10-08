@@ -1,29 +1,32 @@
-import { createBrowserRouter, RouterProvider, Link, useLoaderData, type LoaderFunctionArgs } from "react-router-dom";
-import { TinaMarkdown } from "tinacms/dist/rich-text";
-import { tinaField, useTina } from "tinacms/dist/react";
-import client from "../tina/__generated__/client";
-
-const load = ({ params }: LoaderFunctionArgs) =>
-  client.queries.page({ relativePath: `${params.slug ?? "home"}.mdx` });
-
-function Page() {
-  const { data } = useTina(useLoaderData() as Awaited<ReturnType<typeof load>>);
-  return (
-    <>
-      <nav>
-        <Link to="/">Home</Link> | <Link to="/about">About</Link> |{" "}
-        <a href="/admin/index.html">Admin</a>
-      </nav>
-      <main data-tina-field={tinaField(data.page, "body")}>
-        <TinaMarkdown content={data.page.body} />
-      </main>
-    </>
-  );
-}
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Layout, { loader as layoutLoader } from "./components/Layout";
+import Home, { loader as homeLoader } from "./pages/Home";
+import Painting, { loader as paintingLoader } from "./pages/Painting";
+import Page, { loader as pageLoader } from "./pages/Page";
+import NotFound from "./pages/NotFound";
 
 const router = createBrowserRouter([
-  { path: "/", loader: load, element: <Page /> },
-  { path: "/:slug", loader: load, element: <Page /> },
+  {
+    path: "/",
+    loader: layoutLoader,
+    element: <Layout />,
+    errorElement: <NotFound />,
+    children: [
+      { index: true, loader: homeLoader, element: <Home /> },
+      {
+        path: "work/:slug",
+        loader: paintingLoader,
+        element: <Painting />,
+        errorElement: <NotFound />,
+      },
+      {
+        path: ":slug",
+        loader: pageLoader,
+        element: <Page />,
+        errorElement: <NotFound />,
+      },
+    ],
+  },
 ]);
 
 export default function App() {
