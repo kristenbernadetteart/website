@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tinacms dev -c \"vite\"",
-    "build": "tinacms build && vite build",
+    "build": "tinacms build && vite build && cp dist/index.html dist/404.html",
     "build-local": "tinacms build --local --skip-cloud-checks -c \"vite build\"",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
