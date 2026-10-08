@@ -1,8 +1,26 @@
 {
+  "instagram": "http://localhost:5173/admin/index.html#/~/",
   "artistName": "Your Name",
   "tagline": "Paintings of quiet, overgrown places.",
   "intro": "Original oil and acrylic paintings, worked slowly from the landscape. New pieces most seasons; several are available now.",
   "contactEmail": "you@example.com",
-  "instagram": "",
+  "socials": [
+    {
+      "platform": "bluesky",
+      "url": "f"
+    },
+    {
+      "platform": "facebook",
+      "url": "fb"
+    },
+    {
+      "platform": "tiktok",
+      "url": "f"
+    },
+    {
+      "platform": "instagram",
+      "url": "s"
+    }
+  ],
   "footerNote": "Originals ship insured and ready to hang."
 }

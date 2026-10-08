@@ -207,6 +207,17 @@ ul {
   text-decoration: underline;
 }
 
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.site-footer__contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
 /* =========================================================
    Buttons, badges, chips
    ========================================================= */

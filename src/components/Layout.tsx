@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { tinaField, useTina } from "tinacms/dist/react";
 import client from "../../tina/__generated__/client";
+import SocialIcon, { socialLabel } from "./SocialIcons";
 
 export const loader = () =>
   client.queries.settings({ relativePath: "site.json" });
@@ -16,6 +17,10 @@ export default function Layout() {
     useLoaderData() as Awaited<ReturnType<typeof loader>>,
   );
   const site = data.settings;
+
+  const socials = (site.socials ?? []).flatMap((s) =>
+    s?.url && s.platform ? [{ ...s, url: s.url, platform: s.platform }] : [],
+  );
 
   return (
     <>
@@ -69,27 +74,35 @@ export default function Layout() {
               </p>
             )}
           </div>
-          <ul className="site-footer__links">
-            <li>
-              <a
-                href={`mailto:${site.contactEmail}`}
-                data-tina-field={tinaField(site, "contactEmail")}
-              >
-                {site.contactEmail}
-              </a>
-            </li>
-            {site.instagram && (
-              <li>
-                <a
-                  href={site.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Instagram
-                </a>
-              </li>
+
+          <div className="site-footer__contact">
+            <a
+              href={`mailto:${site.contactEmail}`}
+              data-tina-field={tinaField(site, "contactEmail")}
+            >
+              {site.contactEmail}
+            </a>
+
+            {socials.length > 0 && (
+              <ul className="socials" aria-label="Social media">
+                {socials.map((s, i) => (
+                  <li key={`${s.platform}-${i}`}>
+                    <a
+                      className="socials__link"
+                      href={s.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={socialLabel(s.platform)}
+                      title={socialLabel(s.platform)}
+                      data-tina-field={tinaField(s, "url")}
+                    >
+                      <SocialIcon platform={s.platform} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
             )}
-          </ul>
+          </div>
         </div>
       </footer>
 

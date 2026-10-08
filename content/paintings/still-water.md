@@ -7,7 +7,7 @@ medium: Acrylic on panel
 dimensions: 18 × 24 in
 price: 650
 status: sold
-featured: false
+featured: true
 ---
 
 A small panel made on a windless morning at the edge of a pond.

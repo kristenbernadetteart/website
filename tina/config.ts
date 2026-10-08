@@ -58,7 +58,37 @@ export default defineConfig({
             ui: { component: "textarea" },
           },
           { type: "string", name: "contactEmail", label: "Contact email", required: true },
-          { type: "string", name: "instagram", label: "Instagram URL" },
+          {
+            type: "object",
+            name: "socials",
+            label: "Social links",
+            description: "Shown as white icons in the footer, in this order.",
+            list: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.platform || "New link" }),
+            },
+            fields: [
+              {
+                type: "string",
+                name: "platform",
+                label: "Platform",
+                required: true,
+                options: [
+                  { value: "bluesky", label: "Bluesky" },
+                  { value: "x", label: "X" },
+                  { value: "facebook", label: "Facebook" },
+                  { value: "tiktok", label: "TikTok" },
+                  { value: "instagram", label: "Instagram" },
+                ],
+              },
+              {
+                type: "string",
+                name: "url",
+                label: "Profile URL",
+                required: true,
+              },
+            ],
+          },
           { type: "string", name: "footerNote", label: "Footer note" },
         ],
       },
