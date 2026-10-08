@@ -1,9 +1,9 @@
 {
   "instagram": "http://localhost:5173/admin/index.html#/~/",
-  "artistName": "Your Name",
-  "tagline": "Paintings of quiet, overgrown places.",
-  "intro": "Original oil and acrylic paintings, worked slowly from the landscape. New pieces most seasons; several are available now.",
-  "contactEmail": "you@example.com",
+  "artistName": "Kristen Bernadette",
+  "tagline": "Paintings",
+  "intro": "Original acrylic paintings, created slowly in many layers. New pieces most seasons; some are available now.",
+  "contactEmail": "kristenbernadetteart.com",
   "socials": [
     {
       "platform": "bluesky",
@@ -22,5 +22,5 @@
       "url": "s"
     }
   ],
-  "footerNote": "Originals ship insured and ready to hang."
+  "footerNote": "Originals ship ready to hang."
 }
