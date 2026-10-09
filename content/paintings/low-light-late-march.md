@@ -1,13 +1,13 @@
 ---
-title: Low Light, Late March
-image: /uploads/low-light-late-march.svg
-imageAlt: Dark treeline against a gold early-spring sky
-year: 2024
-medium: Oil on linen
-dimensions: 24 × 30 in
-price: 900
+title: 'Low Light, Late March'
+image: /uploads/flowers-3-WEB.jpeg
+imageAlt: Flowers in a green meadow.
+year: 2026
+medium: Acrylic on panel
+dimensions: 8 × 10 in
+price: 350
 status: available
-featured: false
+featured: true
 ---
 
-The light only holds this colour for about ten minutes, so the sky was painted first and the rest followed.
+Playful flowers basking in the glow on a hot summer day.
