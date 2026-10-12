@@ -6,7 +6,7 @@ year: 2022
 medium: Acrylic on panel
 dimensions: 16 × 20 in
 price: 480
-status: available
+status: reserved
 featured: false
 ---
 
