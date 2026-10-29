@@ -31,7 +31,10 @@ export default function Hero({
               {site.heroButtonText || "View the work"}
             </a>
           )}
-          <Link className="btn btn--secondary" to="/about">
+          <Link
+            className={`btn btn--${site.hideHeroButton ? "primary" : "secondary"}`}
+            to="/about"
+          >
             About the artist
           </Link>
         </div>
