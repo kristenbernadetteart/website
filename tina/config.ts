@@ -93,6 +93,18 @@ export default defineConfig({
             label: "Home intro",
             ui: { component: "textarea" },
           },
+          {
+            type: "string",
+            name: "heroButtonText",
+            label: "Home button text",
+            description: "The main button under the home intro, which jumps to the gallery. Default \"View the work\".",
+          },
+          {
+            type: "boolean",
+            name: "hideHeroButton",
+            label: "Hide home button",
+            description: "Hide the main button under the home intro.",
+          },
           { type: "string", name: "contactEmail", label: "Contact email", required: true },
           {
             type: "object",
