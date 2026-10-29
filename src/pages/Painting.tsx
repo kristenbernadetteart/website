@@ -8,18 +8,29 @@ import { tinaField, useTina } from "tinacms/dist/react";
 import client from "../../tina/__generated__/client";
 import StatusBadge from "../components/StatusBadge";
 import { formatPrice } from "../lib/format";
+import { lowestPrice, printsOf, toPrints } from "../lib/prints";
 import { useSite } from "../lib/site";
 import { useDocumentTitle } from "../lib/useDocumentTitle";
 
-export const loader = ({ params }: LoaderFunctionArgs) =>
-  client.queries.painting({ relativePath: `${params.slug}.md` });
+export const loader = async ({ params }: LoaderFunctionArgs) => {
+  const [painting, prints] = await Promise.all([
+    client.queries.painting({ relativePath: `${params.slug}.md` }),
+    // A broken print shouldn't take the painting page down with it.
+    client.queries.printConnection({ first: 100 }).catch(() => null),
+  ]);
+  return { painting, prints };
+};
 
 export default function Painting() {
-  const { data } = useTina(
-    useLoaderData() as Awaited<ReturnType<typeof loader>>,
-  );
+  const loaded = useLoaderData() as Awaited<ReturnType<typeof loader>>;
+  const { data } = useTina(loaded.painting);
   const site = useSite();
   const p = data.painting;
+  const prints = (
+    loaded.prints ? printsOf(toPrints(loaded.prints.data), p.id) : []
+  ).filter(
+    (print) => print.status !== "hidden",
+  );
 
   useDocumentTitle(p.title, site.artistName);
 
@@ -107,6 +118,38 @@ export default function Painting() {
               </a>
             )}
           </div>
+
+          {prints.length > 0 && (
+            <section className="prints" aria-labelledby="prints-heading">
+              <h2 id="prints-heading" className="prints__heading">
+                Prints of this painting
+              </h2>
+              <ul className="prints__list">
+                {prints.map((print) => {
+                  const from = lowestPrice(print);
+                  return (
+                    <li key={print.id} className="prints__item">
+                      <div>
+                        <p className="prints__name">{print.title}</p>
+                        {print.printType && (
+                          <p className="muted">{print.printType}</p>
+                        )}
+                      </div>
+                      <span className="price">
+                        {from !== null && `From ${formatPrice(from)}`}
+                      </span>
+                      <Link
+                        className="btn btn--secondary"
+                        to={`/prints/${print._sys.filename}`}
+                      >
+                        View print
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          )}
 
           {p.body && (
             <div className="prose" data-tina-field={tinaField(p, "body")}>
