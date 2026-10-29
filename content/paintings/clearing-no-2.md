@@ -1,11 +1,9 @@
 ---
-title: Clearing, No. 2
+title: 'Clearing, No. 2'
 image: /uploads/clearing-no-2.svg
-imageAlt: A bright forest clearing ringed by dark trees
-year: 2022
-medium: Oil on canvas
-dimensions: 48 × 36 in
-price: 1600
+imageAlt: ''
+medium: ''
+dimensions: ''
 status: reserved
 featured: false
 ---
