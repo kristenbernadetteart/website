@@ -22,10 +22,19 @@ export default function Hero({
           </p>
         )}
         <div className="hero__actions">
-          <a className="btn btn--primary" href="#work">
-            View the work
-          </a>
-          <Link className="btn btn--secondary" to="/about">
+          {!site.hideHeroButton && (
+            <a
+              className="btn btn--primary"
+              href="#work"
+              data-tina-field={tinaField(site, "heroButtonText")}
+            >
+              {site.heroButtonText || "View the work"}
+            </a>
+          )}
+          <Link
+            className={`btn btn--${site.hideHeroButton ? "primary" : "secondary"}`}
+            to="/about"
+          >
             About the artist
           </Link>
         </div>

@@ -61,8 +61,12 @@ export default function Layout() {
           <nav aria-label="Primary">
             <ul className="site-nav">
               <li>
-                <NavLink to="/" end>
-                  Work
+                <NavLink
+                  to="/"
+                  end
+                  data-tina-field={tinaField(site, "galleryLabel")}
+                >
+                  {site.galleryLabel || "Work"}
                 </NavLink>
               </li>
               <li>
