@@ -22,7 +22,7 @@ export default function Home() {
   return (
     <>
       <Hero site={site} painting={featured} />
-      <Gallery paintings={paintings} />
+      <Gallery site={site} paintings={paintings} />
     </>
   );
 }

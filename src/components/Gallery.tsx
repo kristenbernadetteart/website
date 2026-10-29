@@ -1,11 +1,19 @@
 import { useState } from "react";
+import { tinaField } from "tinacms/dist/react";
 import { STATUSES, type Painting } from "../lib/paintings";
 import { statusLabel } from "../lib/format";
 import PaintingCard from "./PaintingCard";
+import type { Site } from "../lib/site";
 
 type Filter = "all" | (typeof STATUSES)[number];
 
-export default function Gallery({ paintings }: { paintings: Painting[] }) {
+export default function Gallery({
+  site,
+  paintings,
+}: {
+  site: Site;
+  paintings: Painting[];
+}) {
   const [filter, setFilter] = useState<Filter>("all");
 
   const count = (s: Filter) =>
@@ -26,7 +34,9 @@ export default function Gallery({ paintings }: { paintings: Painting[] }) {
   return (
     <section id="work" className="container section" aria-labelledby="work-title">
       <div className="section__head">
-        <h2 id="work-title">Work</h2>
+        <h2 id="work-title" data-tina-field={tinaField(site, "galleryLabel")}>
+          {site.galleryLabel || "Work"}
+        </h2>
         <div className="chips" role="group" aria-label="Filter paintings">
           {filters.map((f) => (
             <button

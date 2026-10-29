@@ -83,6 +83,12 @@ export default defineConfig({
           },
           {
             type: "string",
+            name: "galleryLabel",
+            label: "Gallery label",
+            description: "The first menu tab and the heading above the gallery. Default \"Work\".",
+          },
+          {
+            type: "string",
             name: "intro",
             label: "Home intro",
             ui: { component: "textarea" },
