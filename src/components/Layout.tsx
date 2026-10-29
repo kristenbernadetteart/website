@@ -6,6 +6,7 @@ import {
   useLoaderData,
 } from "react-router-dom";
 import { tinaField, useTina } from "tinacms/dist/react";
+import { useEffect } from "react";
 import client from "../../tina/__generated__/client";
 import SocialIcon, { socialLabel } from "./SocialIcons";
 
@@ -17,6 +18,12 @@ export default function Layout() {
     useLoaderData() as Awaited<ReturnType<typeof loader>>,
   );
   const site = data.settings;
+
+  const headerText = site.headerText || site.artistName;
+  const showText = !site.logo || !site.hideHeaderText;
+  const logoHeight = Math.min(Math.max(site.logoHeight || 44, 20), 120);
+
+  useFavicon(site.favicon);
 
   const socials = (site.socials ?? []).flatMap((s) =>
     s?.url && s.platform ? [{ ...s, url: s.url, platform: s.platform }] : [],
@@ -30,12 +37,26 @@ export default function Layout() {
 
       <header className="site-header">
         <div className="container site-header__inner">
-          <Link
-            to="/"
-            className="site-header__brand"
-            data-tina-field={tinaField(site, "artistName")}
-          >
-            {site.artistName}
+          <Link to="/" className="site-header__brand">
+            {site.logo && (
+              <img
+                className="site-header__logo"
+                src={site.logo}
+                alt={showText ? "" : site.artistName}
+                style={{ height: logoHeight }}
+                data-tina-field={tinaField(site, "logo")}
+              />
+            )}
+            {showText && (
+              <span
+                data-tina-field={tinaField(
+                  site,
+                  site.headerText ? "headerText" : "artistName",
+                )}
+              >
+                {headerText}
+              </span>
+            )}
           </Link>
           <nav aria-label="Primary">
             <ul className="site-nav">
@@ -43,6 +64,9 @@ export default function Layout() {
                 <NavLink to="/" end>
                   Work
                 </NavLink>
+              </li>
+              <li>
+                <NavLink to="/prints">Prints</NavLink>
               </li>
               <li>
                 <NavLink to="/about">About</NavLink>
@@ -109,4 +133,11 @@ export default function Layout() {
       <ScrollRestoration />
     </>
   );
+}
+/** Point the page's <link rel="icon"> at the CMS favicon, if one is set. */
+function useFavicon(href?: string | null) {
+  useEffect(() => {
+    const link = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+    if (link) link.href = href || "/favicon.ico";
+  }, [href]);
 }

@@ -22,14 +22,21 @@ Local edits write straight to the files in `content/` and `public/uploads/`.
 
 | Collection | Files | Used for |
 | --- | --- | --- |
-| Site settings | `content/settings/site.json` | Name, home headline/intro, email, Instagram, footer |
+| Site settings | `content/settings/site.json` | Name, header logo/text, home headline/intro, email, socials, footer |
 | Pages | `content/pages/*.mdx` | `/about`, or any new page at `/<filename>` |
 | Paintings | `content/paintings/*.md` | Gallery cards and `/work/<filename>` detail pages |
+| Prints | `content/prints/*.md` | `/prints` listing and `/prints/<filename>` detail pages |
 
 Painting status is `available`, `reserved`, or `sold`. The first painting with
 "Feature on home page" checked appears in the hero. Add a Stripe Payment Link
 (or similar) in a painting's "Checkout link" field to show a Buy now button;
 every available painting also has an email inquiry button.
+
+Prints are their own collection: image, print type, edition, sizes with
+prices, a Shopify product link (the Buy button), status (Available or Hidden), sort order and a
+description. Linking a print to its original painting lists it under
+"Prints of this painting" on that painting's page. The `/prints` heading and
+intro come from the "prints" page in Pages.
 
 ## Deploy
 
