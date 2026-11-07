@@ -141,6 +141,7 @@ ul {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   min-height: 68px;
 }
 
@@ -148,6 +149,7 @@ ul {
   display: inline-flex;
   align-items: center;
   gap: 12px;
+  flex: 0 1 auto;
   min-width: 0;
   font-family: var(--font-display);
   font-size: var(--step-1);
@@ -159,14 +161,35 @@ ul {
   display: block;
   height: 44px;
   width: auto;
-  max-width: 50vw;
+  max-width: 100%;
+  min-width: 0;
   object-fit: contain;
+  object-position: left center;
+}
+
+/* Visually hidden, still read by screen readers. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .site-nav {
   display: flex;
-  gap: clamp(18px, 3vw, 32px);
+  flex-shrink: 0;
+  gap: clamp(12px, 3vw, 32px);
   font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .site-nav {
+    font-size: 0.875rem;
+  }
 }
 
 .site-nav a {

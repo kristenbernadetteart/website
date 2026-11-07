@@ -66,13 +66,7 @@ export default defineConfig({
             type: "string",
             name: "headerText",
             label: "Header text",
-            description: "Shown next to the logo. Leave empty to use the artist name.",
-          },
-          {
-            type: "boolean",
-            name: "hideHeaderText",
-            label: "Show logo only",
-            description: "Hide the header text when a logo is set.",
+            description: "Shown in the header when there is no logo (and read aloud to screen readers when there is). Leave empty to use the artist name.",
           },
           {
             type: "string",

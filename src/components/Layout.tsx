@@ -20,7 +20,6 @@ export default function Layout() {
   const site = data.settings;
 
   const headerText = site.headerText || site.artistName;
-  const showText = !site.logo || !site.hideHeaderText;
   const logoHeight = Math.min(Math.max(site.logoHeight || 44, 20), 120);
 
   useFavicon(site.favicon);
@@ -42,21 +41,21 @@ export default function Layout() {
               <img
                 className="site-header__logo"
                 src={site.logo}
-                alt={showText ? "" : site.artistName}
+                alt=""
                 style={{ height: logoHeight }}
                 data-tina-field={tinaField(site, "logo")}
               />
             )}
-            {showText && (
-              <span
-                data-tina-field={tinaField(
-                  site,
-                  site.headerText ? "headerText" : "artistName",
-                )}
-              >
-                {headerText}
-              </span>
-            )}
+            {/* With a logo, the text is visually hidden but still read by screen readers. */}
+            <span
+              className={site.logo ? "sr-only" : undefined}
+              data-tina-field={tinaField(
+                site,
+                site.headerText ? "headerText" : "artistName",
+              )}
+            >
+              {headerText}
+            </span>
           </Link>
           <nav aria-label="Primary">
             <ul className="site-nav">
