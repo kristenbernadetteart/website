@@ -1,5 +1,6 @@
 ---
 title: Summer Flowers Fine Art Print
+image: /uploads/flowers-3-WEB.jpeg
 painting: ''
 printType: Giclee
 edition: Open edition
