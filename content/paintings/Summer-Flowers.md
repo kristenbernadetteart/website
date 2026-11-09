@@ -8,7 +8,7 @@ dimensions: 8 × 10 in
 price: 350
 status: available
 featured: true
+buyUrl: 'https://buy.stripe.com/9B600j5WvfJRfMzddTds403'
 ---
-
 
 Playful flowers basking in the glow on a hot summer day.
