@@ -6,5 +6,6 @@ medium: Acrylic on panel
 dimensions: 8 × 10 in
 price: 350
 status: available
+featured: true
 ---
 
