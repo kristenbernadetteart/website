@@ -7,5 +7,6 @@ dimensions: 8 × 10 in
 price: 350
 status: available
 featured: true
+buyUrl: 'https://buy.stripe.com/fZubJ10Cbapxbwj5Lrds404'
 ---
 
