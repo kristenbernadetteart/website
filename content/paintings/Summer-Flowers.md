@@ -7,7 +7,7 @@ medium: Acrylic on panel
 dimensions: 8 × 10 in
 price: 350
 status: available
-featured: true
+featured: false
 buyUrl: 'https://buy.stripe.com/9B600j5WvfJRfMzddTds403'
 ---
 
