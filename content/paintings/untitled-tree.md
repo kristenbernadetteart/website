@@ -1,6 +1,6 @@
 ---
 title: Untitled Tree
-image: /uploads/Tree.jpeg
+image: /uploads/Ciecle-White.png
 year: 2026
 medium: Acrylic on panel
 dimensions: 8 × 10 in
