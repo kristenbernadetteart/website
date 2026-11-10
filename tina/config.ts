@@ -222,12 +222,39 @@ export default defineConfig({
         },
         fields: [
           { type: "string", name: "title", label: "Title", isTitle: true, required: true },
-          { type: "image", name: "image", label: "Image", required: true },
+          {
+            type: "image",
+            name: "image",
+            label: "Main image",
+            description: "Shown in the gallery, on the home page, and first on the painting's page.",
+            required: true,
+          },
           {
             type: "string",
             name: "imageAlt",
-            label: "Image description (alt text)",
+            label: "Main image description (alt text)",
             description: "Briefly describe what the painting shows, for screen readers.",
+          },
+          {
+            type: "object",
+            name: "moreImages",
+            label: "More images",
+            description: "Optional extra photos, such as close-up details or the painting on a wall. Shown as thumbnails on the painting's page, in this order.",
+            list: true,
+            ui: {
+              itemProps: (item) => ({
+                label: item?.imageAlt || item?.image?.split("/").pop() || "New image",
+              }),
+            },
+            fields: [
+              { type: "image", name: "image", label: "Image" },
+              {
+                type: "string",
+                name: "imageAlt",
+                label: "Image description (alt text)",
+                description: "e.g. Close-up of the brushwork in the sky",
+              },
+            ],
           },
           { type: "number", name: "year", label: "Year" },
           { type: "string", name: "medium", label: "Medium", description: "e.g. Oil on linen" },
