@@ -40,7 +40,11 @@ export default defineConfig({
         match: { include: "site" },
         ui: {
           allowedActions: { create: false, delete: false },
-          router: () => "/",
+          // Global: listed under "Site" in the sidebar, opening the document
+          // directly. The visual editor never auto-opens global forms, so each
+          // page's own content opens there instead of this.
+          global: true,
+          // No router: this appears on every page, so there's no one page to preview.
         },
         fields: [
           { type: "string", name: "artistName", label: "Artist name", required: true },
@@ -142,7 +146,11 @@ export default defineConfig({
         match: { include: "menu" },
         ui: {
           allowedActions: { create: false, delete: false },
-          router: () => "/",
+          // Global: listed under "Site" in the sidebar, opening the document
+          // directly. The visual editor never auto-opens global forms, so each
+          // page's own content opens there instead of this.
+          global: true,
+          // No router: this appears on every page, so there's no one page to preview.
         },
         fields: [
           {
@@ -165,6 +173,7 @@ export default defineConfig({
                   { value: "gallery", label: "Gallery (home)" },
                   { value: "prints", label: "Prints" },
                   { value: "about", label: "About" },
+                  { value: "commissions", label: "Commissions page" },
                   { value: "contact", label: "Contact email" },
                 ],
               },
@@ -172,20 +181,22 @@ export default defineConfig({
                 type: "string",
                 name: "label",
                 label: "Label",
-                description: "The text shown in the menu. Leave empty for the default (the gallery label from Site settings, \"Prints\", \"About\" or \"Commissions\").",
+                description: "The text shown in the menu. Leave empty for the default (the gallery label from Site settings, \"Prints\", \"About\", \"Commissions\" or \"Contact\").",
               },
             ],
           },
         ],
       },
 
-      // ---------- Pages (About, Commissions, Shipping, ...) ----------
+      // ---------- About page (single file) ----------
       {
         name: "page",
-        label: "Pages",
+        label: "About page",
         path: "content/pages",
         format: "mdx",
+        match: { include: "about" },
         ui: {
+          allowedActions: { create: false, delete: false },
           router: ({ document }) => `/${document._sys.filename}`,
         },
         fields: [
@@ -246,6 +257,83 @@ export default defineConfig({
             description: "A Stripe Payment Link or similar. Leave empty to use email inquiry only.",
           },
           { type: "rich-text", name: "body", label: "Description", isBody: true },
+        ],
+      },
+
+      // ---------- Commissions page (single file) ----------
+      {
+        name: "commissionsPage",
+        label: "Commissions page",
+        path: "content/commissions-page",
+        format: "md",
+        match: { include: "commissions" },
+        ui: {
+          allowedActions: { create: false, delete: false },
+          router: () => "/commissions",
+        },
+        fields: [
+          {
+            type: "string",
+            name: "title",
+            label: "Heading",
+            description: "The title at the top of the page. Default \"Commissions\".",
+          },
+          {
+            type: "rich-text",
+            name: "body",
+            label: "Description",
+            description: "Shown below the heading, above the questions.",
+            isBody: true,
+          },
+          {
+            type: "object",
+            name: "questions",
+            label: "Questions",
+            description: "Each question gets a text box for the visitor's answer. Shown in this order.",
+            list: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.question || "New question" }),
+            },
+            fields: [
+              { type: "string", name: "question", label: "Question" },
+              {
+                type: "string",
+                name: "placeholder",
+                label: "Hint text (optional)",
+                description: "Faint example text inside the empty box.",
+              },
+              {
+                type: "boolean",
+                name: "required",
+                label: "Required",
+                description: "The visitor must answer this before sending.",
+              },
+            ],
+          },
+          {
+            type: "string",
+            name: "email",
+            label: "Send to email",
+            description: "Where commission requests go. Leave empty to use the contact email from Site settings.",
+          },
+          {
+            type: "string",
+            name: "subject",
+            label: "Email subject",
+            description: "Default \"Commission request\".",
+          },
+          {
+            type: "string",
+            name: "buttonText",
+            label: "Button text",
+            description: "Default \"Send request\".",
+          },
+          {
+            type: "string",
+            name: "note",
+            label: "Note under the button",
+            description: "Optional. e.g. \"This opens your email app with your answers filled in.\"",
+          },
         ],
       },
 

@@ -12,61 +12,32 @@ export const loadPrintsPage = () =>
   client.queries.printsPage({ relativePath: "prints.md" }).catch(() => null);
 
 export const loader = async () => {
-  const [prints, page] = await Promise.all([
+  const [page, prints] = await Promise.all([
+    client.queries.printsPage({ relativePath: "prints.md" }),
     client.queries.printConnection({ first: 100 }),
-    loadPrintsPage(),
   ]);
-  return { prints, page };
+  return { page, prints };
 };
-
-export type PrintsPageResult = NonNullable<
-  Awaited<ReturnType<typeof loadPrintsPage>>
->;
-type PrintsPage = PrintsPageResult["data"]["printsPage"];
-type PrintsResult = Awaited<ReturnType<typeof loader>>["prints"];
 
 export default function Prints() {
   const loaded = useLoaderData() as Awaited<ReturnType<typeof loader>>;
-  return loaded.page ? (
-    <LivePrints prints={loaded.prints} page={loaded.page} />
-  ) : (
-    <PrintsView prints={loaded.prints} />
-  );
-}
-
-/** With live editing of the Prints page document. */
-function LivePrints({
-  prints,
-  page,
-}: {
-  prints: PrintsResult;
-  page: PrintsPageResult;
-}) {
-  const { data } = useTina(page);
-  return <PrintsView prints={prints} page={data.printsPage} />;
-}
-
-function PrintsView({
-  prints: result,
-  page,
-}: {
-  prints: PrintsResult;
-  page?: PrintsPage;
-}) {
-  const { data } = useTina(result);
+  // The page document must be registered first: Tina's editor opens the first
+  // document a page registers, and otherwise that would be the first print.
+  const page = useTina(loaded.page).data.printsPage;
+  const { data } = useTina(loaded.prints);
   const site = useSite();
   const prints = visiblePrints(toPrints(data));
-  const heading = page?.title || "Prints";
+  const heading = page.title || "Prints";
 
   useDocumentTitle(heading, site.artistName);
 
   return (
     <>
       <header className="container page prints-intro">
-        <h1 data-tina-field={page ? tinaField(page, "title") : undefined}>
+        <h1 data-tina-field={tinaField(page, "title")}>
           {heading}
         </h1>
-        {page?.body && (
+        {page.body && (
           <div className="prose" data-tina-field={tinaField(page, "body")}>
             <TinaMarkdown content={page.body} />
           </div>
@@ -80,7 +51,7 @@ function PrintsView({
           <ul className="grid">
             {prints.map((p) => (
               <li key={p.id}>
-                <PrintCard print={p} borderWidth={page?.borderWidth} />
+                <PrintCard print={p} borderWidth={page.borderWidth} />
               </li>
             ))}
           </ul>

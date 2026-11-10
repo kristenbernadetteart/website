@@ -5,6 +5,7 @@ import Painting, { loader as paintingLoader } from "./pages/Painting";
 import Page, { loader as pageLoader } from "./pages/Page";
 import Prints, { loader as printsLoader } from "./pages/Prints";
 import Print, { loader as printLoader } from "./pages/Print";
+import Commissions, { loader as commissionsLoader } from "./pages/Commissions";
 import NotFound from "./pages/NotFound";
 
 const router = createBrowserRouter([
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
         element: <Print />,
         errorElement: <NotFound />,
       },
+      { path: "commissions", loader: commissionsLoader, element: <Commissions /> },
       {
         path: ":slug",
         loader: pageLoader,

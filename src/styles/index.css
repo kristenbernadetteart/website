@@ -741,3 +741,60 @@ ul {
   box-sizing: content-box;
   border: var(--print-border, 0px) solid #fff;
 }
+
+/* =========================================================
+   Commissions form
+   ========================================================= */
+.commission-form {
+  display: grid;
+  gap: 28px;
+  max-width: 680px;
+  margin-top: 40px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field__label {
+  font-weight: 500;
+}
+
+.field__required {
+  color: var(--color-text-muted);
+  font-weight: 400;
+  font-size: var(--step--1);
+}
+
+.field__input {
+  width: 100%;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius);
+  resize: vertical;
+}
+
+.field__input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}
+
+.field__input:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.commission-form__actions {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+}
+
+.commission-form__actions p {
+  margin: 0;
+  font-size: var(--step--1);
+}

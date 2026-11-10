@@ -14,18 +14,21 @@ import type { Site } from "../lib/site";
 export const loader = async () => {
   const [settings, menu] = await Promise.all([
     client.queries.settings({ relativePath: "site.json" }),
-    client.queries.menu({ relativePath: "menu.json" }).catch(() => null),
+    client.queries.menu({ relativePath: "menu.json" }),
   ]);
   return { settings, menu };
 };
 
-type MenuResult = NonNullable<Awaited<ReturnType<typeof loader>>["menu"]>;
-type Menu = MenuResult["data"]["menu"];
+type Menu = Awaited<ReturnType<typeof loader>>["menu"]["data"]["menu"];
 
 export default function Layout() {
   const loaded = useLoaderData() as Awaited<ReturnType<typeof loader>>;
   const { data } = useTina(loaded.settings);
   const site = data.settings;
+  // Keep this here, not in a child component: Tina's editor opens the first
+  // document a page registers, and child components register before this one,
+  // so the page's own content (Commissions, Prints...) wins over the menu.
+  const menu = useTina(loaded.menu).data.menu;
 
   const headerText = site.headerText || site.artistName;
   const logoHeight = Math.min(Math.max(site.logoHeight || 44, 20), 120);
@@ -65,11 +68,7 @@ export default function Layout() {
               {headerText}
             </span>
           </Link>
-          {loaded.menu ? (
-            <LiveNav site={site} result={loaded.menu} />
-          ) : (
-            <SiteNav site={site} />
-          )}
+          <SiteNav site={site} menu={menu} />
         </div>
       </header>
 
@@ -128,12 +127,6 @@ export default function Layout() {
     </>
   );
 }
-/** The menu with live editing, when the Menu document exists. */
-function LiveNav({ site, result }: { site: Site; result: MenuResult }) {
-  const { data } = useTina(result);
-  return <SiteNav site={site} menu={data.menu} />;
-}
-
 function SiteNav({ site, menu }: { site: Site; menu?: Menu }) {
   return (
     <nav aria-label="Primary">
@@ -160,18 +153,20 @@ function SiteNav({ site, menu }: { site: Site; menu?: Menu }) {
   );
 }
 
-type NavLinkKey = "gallery" | "prints" | "about" | "contact";
+type NavLinkKey = "gallery" | "prints" | "about" | "commissions" | "contact";
 
 const NAV_PATHS: Record<Exclude<NavLinkKey, "contact">, string> = {
   gallery: "/",
   prints: "/prints",
   about: "/about",
+  commissions: "/commissions",
 };
 
-const DEFAULT_NAV: NavLinkKey[] = ["gallery", "prints", "about", "contact"];
+const DEFAULT_NAV: NavLinkKey[] = ["gallery", "prints", "about", "commissions"];
+const NAV_KEYS: NavLinkKey[] = [...DEFAULT_NAV, "contact"];
 
 const isNavKey = (v: unknown): v is NavLinkKey =>
-  typeof v === "string" && (DEFAULT_NAV as string[]).includes(v);
+  typeof v === "string" && (NAV_KEYS as string[]).includes(v);
 
 /** Header menu links from settings, or the default menu when none are set. */
 function navItems(site: Site, menu: Menu | undefined) {
@@ -180,7 +175,8 @@ function navItems(site: Site, menu: Menu | undefined) {
       gallery: site.galleryLabel || "Work",
       prints: "Prints",
       about: "About",
-      contact: "Commissions",
+      commissions: "Commissions",
+      contact: "Contact",
     })[link];
 
   const configured = (menu?.links ?? []).flatMap((item) =>
