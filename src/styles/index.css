@@ -724,3 +724,131 @@ ul {
     transform: none;
   }
 }
+
+/* Prints: a white paper border around the image itself (not the mat).
+   The image keeps its own shape, so the border hugs the visible picture. */
+.mat--print {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat--print img {
+  width: auto;
+  height: auto;
+  max-width: calc(100% - 2 * var(--print-border, 0px));
+  max-height: calc(100% - 2 * var(--print-border, 0px));
+  box-sizing: content-box;
+  border: var(--print-border, 0px) solid #fff;
+}
+
+/* =========================================================
+   Commissions form
+   ========================================================= */
+.commission-form {
+  display: grid;
+  gap: 28px;
+  max-width: 680px;
+  margin-top: 40px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field__label {
+  font-weight: 500;
+}
+
+.field__required {
+  color: var(--color-text-muted);
+  font-weight: 400;
+  font-size: var(--step--1);
+}
+
+.field__input {
+  width: 100%;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius);
+  resize: vertical;
+}
+
+.field__input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}
+
+.field__input:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.commission-form__actions {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+}
+
+.commission-form__actions p {
+  margin: 0;
+  font-size: var(--step--1);
+}
+
+/* =========================================================
+   Painting image viewer (main image + thumbnails)
+   ========================================================= */
+.gallery-viewer__thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gallery-viewer__thumb {
+  display: block;
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: calc(var(--radius) / 2);
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.65;
+  transition: opacity 0.15s ease, border-color 0.15s ease;
+}
+
+.gallery-viewer__thumb:hover {
+  opacity: 1;
+}
+
+.gallery-viewer__thumb[aria-pressed="true"] {
+  opacity: 1;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+.gallery-viewer__thumb:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.gallery-viewer__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 480px) {
+  .gallery-viewer__thumb {
+    width: 60px;
+    height: 60px;
+  }
+}

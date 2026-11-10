@@ -6,6 +6,7 @@ import {
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { tinaField, useTina } from "tinacms/dist/react";
 import client from "../../tina/__generated__/client";
+import ImageGallery, { type GalleryImage } from "../components/ImageGallery";
 import StatusBadge from "../components/StatusBadge";
 import { formatPrice } from "../lib/format";
 import { lowestPrice, printsOf, toPrints } from "../lib/prints";
@@ -34,6 +35,23 @@ export default function Painting() {
 
   useDocumentTitle(p.title, site.artistName);
 
+  const images: GalleryImage[] = [
+    ...(p.image
+      ? [{ src: p.image, alt: p.imageAlt || p.title, field: tinaField(p, "image") }]
+      : []),
+    ...(p.moreImages ?? []).flatMap((m, i) =>
+      m?.image
+        ? [
+            {
+              src: m.image,
+              alt: m.imageAlt || `${p.title}, image ${i + 2}`,
+              field: tinaField(m, "image"),
+            },
+          ]
+        : [],
+    ),
+  ];
+
   const status = p.status ?? "available";
   const subject = encodeURIComponent(`Inquiry: ${p.title}`);
   const body = encodeURIComponent(
@@ -54,14 +72,8 @@ export default function Painting() {
       </Link>
 
       <div className="work__grid">
-        <div className="mat mat--tall work__image">
-          {p.image && (
-            <img
-              src={p.image}
-              alt={p.imageAlt || p.title}
-              data-tina-field={tinaField(p, "image")}
-            />
-          )}
+        <div className="work__image">
+          <ImageGallery key={p.id} images={images} />
         </div>
 
         <div className="work__info">

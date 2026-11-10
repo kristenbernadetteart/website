@@ -9,15 +9,26 @@ import { tinaField, useTina } from "tinacms/dist/react";
 import { useEffect } from "react";
 import client from "../../tina/__generated__/client";
 import SocialIcon, { socialLabel } from "./SocialIcons";
+import type { Site } from "../lib/site";
 
-export const loader = () =>
-  client.queries.settings({ relativePath: "site.json" });
+export const loader = async () => {
+  const [settings, menu] = await Promise.all([
+    client.queries.settings({ relativePath: "site.json" }),
+    client.queries.menu({ relativePath: "menu.json" }),
+  ]);
+  return { settings, menu };
+};
+
+type Menu = Awaited<ReturnType<typeof loader>>["menu"]["data"]["menu"];
 
 export default function Layout() {
-  const { data } = useTina(
-    useLoaderData() as Awaited<ReturnType<typeof loader>>,
-  );
+  const loaded = useLoaderData() as Awaited<ReturnType<typeof loader>>;
+  const { data } = useTina(loaded.settings);
   const site = data.settings;
+  // Keep this here, not in a child component: Tina's editor opens the first
+  // document a page registers, and child components register before this one,
+  // so the page's own content (Commissions, Prints...) wins over the menu.
+  const menu = useTina(loaded.menu).data.menu;
 
   const headerText = site.headerText || site.artistName;
   const logoHeight = Math.min(Math.max(site.logoHeight || 44, 20), 120);
@@ -57,28 +68,7 @@ export default function Layout() {
               {headerText}
             </span>
           </Link>
-          <nav aria-label="Primary">
-            <ul className="site-nav">
-              <li>
-                <NavLink
-                  to="/"
-                  end
-                  data-tina-field={tinaField(site, "galleryLabel")}
-                >
-                  {site.galleryLabel || "Work"}
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/prints">Prints</NavLink>
-              </li>
-              <li>
-                <NavLink to="/about">About</NavLink>
-              </li>
-              <li>
-                <a href={`mailto:${site.contactEmail}`}>Contact</a>
-              </li>
-            </ul>
-          </nav>
+          <SiteNav site={site} menu={menu} />
         </div>
       </header>
 
@@ -137,6 +127,78 @@ export default function Layout() {
     </>
   );
 }
+function SiteNav({ site, menu }: { site: Site; menu?: Menu }) {
+  return (
+    <nav aria-label="Primary">
+      <ul className="site-nav">
+        {navItems(site, menu).map((item, i) => (
+          <li key={`${item.link}-${i}`}>
+            {item.link === "contact" ? (
+              <a href={`mailto:${site.contactEmail}`} data-tina-field={item.field}>
+                {item.label}
+              </a>
+            ) : (
+              <NavLink
+                to={NAV_PATHS[item.link]}
+                end={item.link === "gallery"}
+                data-tina-field={item.field}
+              >
+                {item.label}
+              </NavLink>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
+type NavLinkKey = "gallery" | "prints" | "about" | "commissions" | "contact";
+
+const NAV_PATHS: Record<Exclude<NavLinkKey, "contact">, string> = {
+  gallery: "/",
+  prints: "/prints",
+  about: "/about",
+  commissions: "/commissions",
+};
+
+const DEFAULT_NAV: NavLinkKey[] = ["gallery", "prints", "about", "commissions"];
+const NAV_KEYS: NavLinkKey[] = [...DEFAULT_NAV, "contact"];
+
+const isNavKey = (v: unknown): v is NavLinkKey =>
+  typeof v === "string" && (NAV_KEYS as string[]).includes(v);
+
+/** Header menu links from settings, or the default menu when none are set. */
+function navItems(site: Site, menu: Menu | undefined) {
+  const defaultLabel = (link: NavLinkKey) =>
+    ({
+      gallery: site.galleryLabel || "Work",
+      prints: "Prints",
+      about: "About",
+      commissions: "Commissions",
+      contact: "Contact",
+    })[link];
+
+  const configured = (menu?.links ?? []).flatMap((item) =>
+    item && isNavKey(item.link)
+      ? [
+          {
+            link: item.link,
+            label: item.label || defaultLabel(item.link),
+            field: tinaField(item, "label"),
+          },
+        ]
+      : [],
+  );
+  if (configured.length > 0) return configured;
+
+  return DEFAULT_NAV.map((link) => ({
+    link,
+    label: defaultLabel(link),
+    field: link === "gallery" ? tinaField(site, "galleryLabel") : undefined,
+  }));
+}
+
 /** Point the page's <link rel="icon"> at the CMS favicon, if one is set. */
 function useFavicon(href?: string | null) {
   useEffect(() => {
