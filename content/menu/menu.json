@@ -1,0 +1,17 @@
+{
+  "links": [
+    {
+      "link": "gallery"
+    },
+    {
+      "link": "prints"
+    },
+    {
+      "link": "about"
+    },
+    {
+      "link": "contact",
+      "label": "Commissions"
+    }
+  ]
+}

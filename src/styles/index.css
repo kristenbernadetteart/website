@@ -724,3 +724,20 @@ ul {
     transform: none;
   }
 }
+
+/* Prints: a white paper border around the image itself (not the mat).
+   The image keeps its own shape, so the border hugs the visible picture. */
+.mat--print {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat--print img {
+  width: auto;
+  height: auto;
+  max-width: calc(100% - 2 * var(--print-border, 0px));
+  max-height: calc(100% - 2 * var(--print-border, 0px));
+  box-sizing: content-box;
+  border: var(--print-border, 0px) solid #fff;
+}

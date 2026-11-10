@@ -8,25 +8,26 @@ import { tinaField, useTina } from "tinacms/dist/react";
 import client from "../../tina/__generated__/client";
 import { formatPrice } from "../lib/format";
 import { lowestPrice, printSizes } from "../lib/prints";
-import { useSite } from "../lib/site";
+import { printBorderStyle, useSite } from "../lib/site";
+import { loadPrintsPage } from "./Prints";
 import { useDocumentTitle } from "../lib/useDocumentTitle";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const result = await client.queries.print({
-    relativePath: `${params.slug}.md`,
-  });
+  const [result, page] = await Promise.all([
+    client.queries.print({ relativePath: `${params.slug}.md` }),
+    loadPrintsPage(),
+  ]);
   // Hidden prints 404 for visitors, but still preview inside the Tina editor,
   // which renders the site in an iframe.
   if (result.data.print.status === "hidden" && window.self === window.top) {
     throw new Response("Not found", { status: 404 });
   }
-  return result;
+  return { result, borderWidth: page?.data.printsPage.borderWidth };
 };
 
 export default function Print() {
-  const { data } = useTina(
-    useLoaderData() as Awaited<ReturnType<typeof loader>>,
-  );
+  const loaded = useLoaderData() as Awaited<ReturnType<typeof loader>>;
+  const { data } = useTina(loaded.result);
   const site = useSite();
   const p = data.print;
 
@@ -48,7 +49,10 @@ export default function Print() {
       </Link>
 
       <div className="work__grid">
-        <div className="mat mat--tall work__image">
+        <div
+          className="mat mat--tall mat--print work__image"
+          style={printBorderStyle(loaded.borderWidth)}
+        >
           {p.image && (
             <img
               src={p.image}

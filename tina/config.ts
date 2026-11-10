@@ -133,6 +133,52 @@ export default defineConfig({
         ],
       },
 
+      // ---------- Header menu (single file) ----------
+      {
+        name: "menu",
+        label: "Menu",
+        path: "content/menu",
+        format: "json",
+        match: { include: "menu" },
+        ui: {
+          allowedActions: { create: false, delete: false },
+          router: () => "/",
+        },
+        fields: [
+          {
+            type: "object",
+            name: "links",
+            label: "Menu links",
+            description: "The links in the header menu, in this order. Drag to reorder; delete one to hide it. Leave empty for the default menu.",
+            list: true,
+            ui: {
+              itemProps: (item) => ({
+                label: item?.label || item?.link || "New link",
+              }),
+            },
+            fields: [
+              {
+                type: "string",
+                name: "link",
+                label: "Goes to",
+                options: [
+                  { value: "gallery", label: "Gallery (home)" },
+                  { value: "prints", label: "Prints" },
+                  { value: "about", label: "About" },
+                  { value: "contact", label: "Contact email" },
+                ],
+              },
+              {
+                type: "string",
+                name: "label",
+                label: "Label",
+                description: "The text shown in the menu. Leave empty for the default (the gallery label from Site settings, \"Prints\", \"About\" or \"Commissions\").",
+              },
+            ],
+          },
+        ],
+      },
+
       // ---------- Pages (About, Commissions, Shipping, ...) ----------
       {
         name: "page",
@@ -200,6 +246,40 @@ export default defineConfig({
             description: "A Stripe Payment Link or similar. Leave empty to use email inquiry only.",
           },
           { type: "rich-text", name: "body", label: "Description", isBody: true },
+        ],
+      },
+
+      // ---------- Prints page (single file) ----------
+      {
+        name: "printsPage",
+        label: "Prints page",
+        path: "content/prints-page",
+        format: "md",
+        match: { include: "prints" },
+        ui: {
+          allowedActions: { create: false, delete: false },
+          router: () => "/prints",
+        },
+        fields: [
+          {
+            type: "string",
+            name: "title",
+            label: "Heading",
+            description: "The title at the top of the Prints page. Default \"Prints\".",
+          },
+          {
+            type: "number",
+            name: "borderWidth",
+            label: "Print border width (px)",
+            description: "The white border around print images (not original paintings), from 0 to 40. 0 for no border. Default 12.",
+          },
+          {
+            type: "rich-text",
+            name: "body",
+            label: "Description",
+            description: "Shown below the heading.",
+            isBody: true,
+          },
         ],
       },
 

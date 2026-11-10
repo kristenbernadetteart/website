@@ -2,13 +2,20 @@ import { Link } from "react-router-dom";
 import { tinaField } from "tinacms/dist/react";
 import { formatPrice } from "../lib/format";
 import { lowestPrice, type Print } from "../lib/prints";
+import { printBorderStyle } from "../lib/site";
 
-export default function PrintCard({ print }: { print: Print }) {
+export default function PrintCard({
+  print,
+  borderWidth,
+}: {
+  print: Print;
+  borderWidth?: number | null;
+}) {
   const from = lowestPrice(print);
 
   return (
     <Link className="card" to={`/prints/${print._sys.filename}`}>
-      <div className="mat">
+      <div className="mat mat--print" style={printBorderStyle(borderWidth)}>
         {print.image && (
           <img
             src={print.image}

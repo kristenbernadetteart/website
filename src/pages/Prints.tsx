@@ -7,26 +7,71 @@ import { toPrints, visiblePrints } from "../lib/prints";
 import { useSite } from "../lib/site";
 import { useDocumentTitle } from "../lib/useDocumentTitle";
 
+/** The "Prints page" document (heading, description, border width), if it exists. */
+export const loadPrintsPage = () =>
+  client.queries.printsPage({ relativePath: "prints.md" }).catch(() => null);
+
 export const loader = async () => {
   const [prints, page] = await Promise.all([
     client.queries.printConnection({ first: 100 }),
-    // The heading and intro come from the "prints" page under Pages, if it exists.
-    client.queries.page({ relativePath: "prints.mdx" }).catch(() => null),
+    loadPrintsPage(),
   ]);
   return { prints, page };
 };
 
+export type PrintsPageResult = NonNullable<
+  Awaited<ReturnType<typeof loadPrintsPage>>
+>;
+type PrintsPage = PrintsPageResult["data"]["printsPage"];
+type PrintsResult = Awaited<ReturnType<typeof loader>>["prints"];
+
 export default function Prints() {
   const loaded = useLoaderData() as Awaited<ReturnType<typeof loader>>;
-  const { data } = useTina(loaded.prints);
+  return loaded.page ? (
+    <LivePrints prints={loaded.prints} page={loaded.page} />
+  ) : (
+    <PrintsView prints={loaded.prints} />
+  );
+}
+
+/** With live editing of the Prints page document. */
+function LivePrints({
+  prints,
+  page,
+}: {
+  prints: PrintsResult;
+  page: PrintsPageResult;
+}) {
+  const { data } = useTina(page);
+  return <PrintsView prints={prints} page={data.printsPage} />;
+}
+
+function PrintsView({
+  prints: result,
+  page,
+}: {
+  prints: PrintsResult;
+  page?: PrintsPage;
+}) {
+  const { data } = useTina(result);
   const site = useSite();
   const prints = visiblePrints(toPrints(data));
+  const heading = page?.title || "Prints";
 
-  useDocumentTitle("Prints", site.artistName);
+  useDocumentTitle(heading, site.artistName);
 
   return (
     <>
-      {loaded.page ? <PrintsIntro result={loaded.page} /> : <DefaultIntro />}
+      <header className="container page prints-intro">
+        <h1 data-tina-field={page ? tinaField(page, "title") : undefined}>
+          {heading}
+        </h1>
+        {page?.body && (
+          <div className="prose" data-tina-field={tinaField(page, "body")}>
+            <TinaMarkdown content={page.body} />
+          </div>
+        )}
+      </header>
 
       <section className="container section" aria-label="Prints">
         {prints.length === 0 ? (
@@ -35,38 +80,12 @@ export default function Prints() {
           <ul className="grid">
             {prints.map((p) => (
               <li key={p.id}>
-                <PrintCard print={p} />
+                <PrintCard print={p} borderWidth={page?.borderWidth} />
               </li>
             ))}
           </ul>
         )}
       </section>
     </>
-  );
-}
-
-type PageResult = NonNullable<
-  Awaited<ReturnType<typeof loader>>["page"]
->;
-
-function PrintsIntro({ result }: { result: PageResult }) {
-  const { data } = useTina(result);
-  const page = data.page;
-
-  return (
-    <header className="container page prints-intro">
-      <h1 data-tina-field={tinaField(page, "title")}>{page.title}</h1>
-      <div className="prose" data-tina-field={tinaField(page, "body")}>
-        <TinaMarkdown content={page.body} />
-      </div>
-    </header>
-  );
-}
-
-function DefaultIntro() {
-  return (
-    <header className="container page prints-intro">
-      <h1>Prints</h1>
-    </header>
   );
 }
