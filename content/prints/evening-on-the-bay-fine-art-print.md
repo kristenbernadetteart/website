@@ -11,4 +11,4 @@ shopUrl: 'https://buy.stripe.com/9B600jdoXgNV9obehXds408'
 status: available
 ---
 
-This 8x10 art print is the perfect addition to your collection. Prints usually arrive within 3-7 business days of ordering.
+This art print is the perfect addition to your collection. Prints usually arrive within 3-7 business days of ordering.
