@@ -3,4 +3,4 @@ title: Prints
 borderWidth: 18
 ---
 
-testtest
+High quality giclee fine art prints.
