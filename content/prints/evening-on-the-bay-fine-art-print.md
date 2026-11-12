@@ -6,8 +6,8 @@ printType: Giclee with white border
 edition: Open edition
 sizes:
   - size: 8x10 inches
-    price: 40
-shopUrl: 'https://buy.stripe.com/dRmeVd5Wv9ltasf7Tzds401'
+    price: 35
+shopUrl: ''
 status: available
 ---
 
