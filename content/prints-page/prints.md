@@ -1,6 +1,6 @@
 ---
 title: Prints
-borderWidth: 18
+borderWidth: 10
 ---
 
 High quality giclee fine art prints.
