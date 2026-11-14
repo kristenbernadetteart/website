@@ -7,7 +7,7 @@ dimensions: 8 × 10 in
 price: 350
 status: available
 featured: true
-buyUrl: 'https://buy.stripe.com/fZubJ10Cbapxbwj5Lrds404'
+buyUrl: ''
 ---
 
 The untitled tree refuses to be defined. Add this piece to your collection.
