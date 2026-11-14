@@ -8,7 +8,7 @@ sizes:
   - size: 8x10 inches
     price: 35
 shopUrl: 'https://buy.stripe.com/8x29AT3On55d8k73Djds407'
-status: available
+status: hidden
 ---
 
 This art print is the perfect addition to your collection.
