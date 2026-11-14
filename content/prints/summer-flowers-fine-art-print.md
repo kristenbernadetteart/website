@@ -11,4 +11,4 @@ shopUrl: 'https://buy.stripe.com/8x29AT3On55d8k73Djds407'
 status: available
 ---
 
-This art print is the perfect addition to your collection. Prints usually arrive within 3-7 business days of ordering.
+This art print is the perfect addition to your collection.
