@@ -7,7 +7,7 @@ printType: ''
 edition: Open edition
 sizes:
   - size: ''
-shopUrl: 'https://fineartamerica.com/featured/1-summer-flowers-kristen-bernadette.html'
+shopUrl: 'https://fineartamerica.com/featured/2-summer-flowers-kristen-bernadette.html?product=art-print'
 status: available
 ---
 
