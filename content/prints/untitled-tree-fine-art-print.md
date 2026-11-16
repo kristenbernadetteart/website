@@ -6,7 +6,7 @@ printType: 'Giclee '
 edition: Open edition
 sizes:
   - size: 8x10 inches
-shopUrl: 'https://fineartamerica.com/featured/untitled-tree-kristen-bernadette.html?product=art-print'
+shopUrl: 'https://fineartamerica.com/featured/oak-on-blue-sky-kristen-bernadette.html?product=art-print'
 status: available
 ---
 
