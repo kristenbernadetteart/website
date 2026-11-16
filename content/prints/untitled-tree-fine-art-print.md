@@ -11,4 +11,4 @@ shopUrl: 'https://fineartamerica.com/featured/untitled-tree-kristen-bernadette.h
 status: hidden
 ---
 
-This art print is the perfect addition to your collection.
+A large tree with a thick trunk stands against a backdrop of a clear blue sky. Its lush green foliage creates a serene and natural atmosphere.
