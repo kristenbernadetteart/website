@@ -3,4 +3,4 @@ title: Prints
 borderWidth: 10
 ---
 
-Bring some life to your space with these high quality giclee prints of my original paintings. 
+Bring some life to your space with art prints of my original paintings.
