@@ -7,7 +7,7 @@ edition: Open edition
 sizes:
   - size: 8x10 inches
 shopUrl: 'https://fineartamerica.com/featured/untitled-tree-kristen-bernadette.html?product=art-print'
-status: hidden
+status: available
 ---
 
 A large tree with a thick trunk stands against a backdrop of a clear blue sky. Its lush green foliage creates a serene and natural atmosphere.
