@@ -2,7 +2,7 @@
 title: Oak on Blue Sky Fine Art Print
 image: /uploads/Untitled-Tree-300.jpeg
 painting: content/paintings/untitled-tree.md
-printType: 'Giclee '
+printType: ''
 edition: Open edition
 sizes:
   - size: 8x10 inches
