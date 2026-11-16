@@ -1,7 +1,7 @@
 ---
 title: Summer Flowers
 image: /uploads/flowers-3-WEB.jpeg
-imageAlt: Flowers in a green meadow.
+imageAlt: A vibrant depiction of purple coneflowers with lush green foliage. The setting conveys a sense of serenity and natural beauty.
 year: 2026
 medium: Acrylic on panel
 dimensions: 8 × 10 in
@@ -11,4 +11,4 @@ featured: false
 buyUrl: ''
 ---
 
-Playful flowers basking in the glow on a hot summer day.
+A vibrant depiction of purple coneflowers with lush green foliage. The setting conveys a sense of serenity and natural beauty.
