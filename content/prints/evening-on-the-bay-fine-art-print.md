@@ -6,8 +6,7 @@ painting: content/paintings/Evening-on-the-Bay.md
 printType: ''
 edition: Open edition
 sizes:
-  - size: 8x10 inches
-    price: 35
+  - size: ''
 shopUrl: 'https://fineartamerica.com/featured/evening-on-the-bay-kristen-bernadette.html?product=art-print'
 status: hidden
 ---
