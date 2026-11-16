@@ -1,5 +1,5 @@
 ---
-title: Untitled Tree Fine Art Print
+title: Oak on Blue Sky Fine Art Print
 image: /uploads/Untitled-Tree-300.jpeg
 painting: content/paintings/untitled-tree.md
 printType: 'Giclee '
@@ -10,4 +10,4 @@ shopUrl: 'https://fineartamerica.com/featured/untitled-tree-kristen-bernadette.h
 status: available
 ---
 
-A large tree with a thick trunk stands against a backdrop of a clear blue sky. Its lush green foliage creates a serene and natural atmosphere.
+A large oak tree with a thick trunk stands against a backdrop of a clear blue sky. Its lush green foliage creates a serene and natural atmosphere.
