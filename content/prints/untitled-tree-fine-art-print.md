@@ -6,7 +6,6 @@ printType: 'Giclee '
 edition: Open edition
 sizes:
   - size: 8x10 inches
-    price: 35
 shopUrl: 'https://fineartamerica.com/featured/untitled-tree-kristen-bernadette.html?product=art-print'
 status: hidden
 ---
