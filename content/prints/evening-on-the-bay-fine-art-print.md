@@ -1,14 +1,15 @@
 ---
 title: Evening on the Bay Fine Art Print
 image: /uploads/Evening-on-the-Bay300.jpeg
+imageAlt: 'A serene coastal scene under a deep blue night sky. Flickering lights from distant houses reflect off the calm water, creating a tranquil atmosphere.'
 painting: content/paintings/Evening-on-the-Bay.md
-printType: Giclee
+printType: ''
 edition: Open edition
 sizes:
   - size: 8x10 inches
     price: 35
-shopUrl: 'https://buy.stripe.com/9B600jdoXgNV9obehXds408'
+shopUrl: 'https://fineartamerica.com/featured/evening-on-the-bay-kristen-bernadette.html?product=art-print'
 status: hidden
 ---
 
-This art print is the perfect addition to your collection.
+A serene coastal scene under a deep blue night sky. Flickering lights from distant houses reflect off the calm water, creating a tranquil atmosphere.
