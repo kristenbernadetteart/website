@@ -7,8 +7,8 @@ printType: ''
 edition: Open edition
 sizes:
   - size: 8x10 inches
-shopUrl: 'https://fineartamerica.com/featured/oak-on-blue-sky-kristen-bernadette.html?product=art-print'
-status: available
+shopUrl: ''
+status: hidden
 ---
 
 A large oak tree with a thick trunk stands against a backdrop of a clear blue sky. Its lush green foliage creates a serene and natural atmosphere.
